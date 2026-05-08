@@ -14,14 +14,19 @@ soup = BeautifulSoup(html, "html.parser")
 
 products = soup.find_all("a", class_="core")
 
-print(products[0])
-print(type(product))
+#print(products[0])
+#print(products[1])
+#print(products[2])
 
+print(type(products))
 
-for product in products:
-    print(type(product))
+products_data = []
+
+for product in products[:10]:
+    #print(type(product))
     try:
         product_link = product["href"]
+        product_link = "https://www.jumia.ma" + product_link
     except:
         product_link = None
 
@@ -30,13 +35,28 @@ for product in products:
     except:
         product_img_link = None
 
-product_link = soup.find("a", class_="core")["href"]
-product_img_link = soup.find("img", class_="img")["data-src"]
-product_title = soup.find("h3", class_="name").text
-product_price = soup.find("div", class_="prc").text
+    try:
+        product_title = product.find("h3", class_="name").text
+    except:
+        product_title = None
+    
+    try:
+        product_price = product.find("div", class_="prc").text
+        #print(product_price)
+    except:
+        product_price = None
+
+    products_data.append({
+        "link" : product_link,
+        "img_link" : product_img_link,
+        "title" : product_title,
+        "price" : product_price, #str in this moment
+    })
 
 
-print(product_link)
-print(product_img_link)
-print(product_title)
-print(product_price)
+for product in products_data[:10]:
+    print(product["link"])
+    print(product["img_link"])
+    print(product["title"])
+    print(product["price"])
+    print("-" * 40)
