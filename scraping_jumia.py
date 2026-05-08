@@ -15,7 +15,7 @@ soup = BeautifulSoup(html, "html.parser")
 products = soup.find_all("a", class_="core")
 
 print(products[0])
-print(type())
+print(type(products))
 
 
 for product in products:
